@@ -1,0 +1,84 @@
+#notebook-list {
+  flex: 1;
+
+  .btn {
+    font-size: 16px;
+    color: #666;
+    cursor: pointer;
+    margin-left: 20px;
+    padding: 20px;
+    border-radius: 999px;
+
+    & .iconfont {
+      font-size: 16px;
+    }
+  }
+
+  input {
+    width: 300px;
+    height: 30px;
+    line-height: 30px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 3px 5px;
+    outline: none;
+  }
+
+  header {
+    padding: 12px;
+    border-bottom: 1px solid #ccc;
+  }
+
+  main {
+    padding: 30px 40px;
+
+    h3 {
+      padding: 10px;
+      font-size: 30px;
+      color: #000;
+    }
+
+    .book-list {
+      margin-top: 20px;
+      font-size: 20px;
+      padding: 20px;
+      color: #666;
+      background: #fff;
+      border-radius: 4px;
+      font-weight: bold;
+      span {
+        font-size: 20px;
+        font-weight: bold;
+        color: #b3c0c8;
+      }
+    }
+
+
+
+    .date, .action {
+      float: right;
+      margin-left: 10px;
+
+    }
+    .notebook{
+      display: block;
+      cursor: pointer;
+    }
+    a.notebook:hover{
+      background: #f7fafd;
+    }
+
+    a.notebook div{
+      border-bottom: 1px solid #ebebeb;
+      padding: 12px 14px;
+    }
+    .error-msg{
+      font-size: 20px;
+      color: red;
+    }
+  }
+
+  .layout {
+    max-width: 100%;
+  }
+}
