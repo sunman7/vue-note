@@ -14,7 +14,6 @@
 
 <script>
   import avatar from "@/components/Avatar";
-
   import auth from "@/api/auth";
 
   export default {
@@ -23,7 +22,8 @@
     },
     methods: {
       logout() {
-        auth.logout().then(data =>{
+        auth.logout().then(data => {
+          this.$router.push({path: "login"});
           console.log(data);
         });
       }
@@ -37,7 +37,7 @@
 
   #sidebar {
     position: relative;
-    width: 56px;
+    width: 140px;
     text-align: center;
     background-color: #2c333c;
 
@@ -69,6 +69,7 @@
 
     .iconfont {
       color: #fff;
+      font-size: 30px;
     }
   }
 

@@ -5,14 +5,14 @@ console.log(baseURLConfig);
 
 axios.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
 axios.defaults.baseURL = baseURLConfig.baseURL;
-//跨域
+// 是否跨域
 axios.defaults.withCredentials = true;
+export default function request(url, type = "GET", data = {}) {
 
-export default function request(url, type = "get", data = {}) {
   return new Promise(((resolve, reject) => {
     let option = {
       url,
-      methods: type,
+      method: type,
       validateStatus(status) {
         return (status >= 200 && status < 300) || status === 400;
       }

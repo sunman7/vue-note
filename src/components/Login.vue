@@ -35,7 +35,7 @@
 <script>
   import auth from "@/api/auth";
 
-  auth.getInfo();
+
   export default {
     data() {
       return {
@@ -88,6 +88,7 @@
         }).then(data => {
           this.register.isError = false;
           this.register.notice = "";
+          this.$router.push({path: "notebooks"});
         }).catch(err => {
           this.register.isError = true;
           this.register.notice = err.msg;
@@ -118,6 +119,8 @@
         }).then(data => {
           this.login.isError = false;
           this.login.notice = "";
+          auth.getInfo().then(res => console.log(res));
+          this.$router.push({path: "notebooks"});
         }).catch(err => {
           this.login.isError = true;
           this.login.notice = err.msg;
@@ -171,7 +174,7 @@
 
     .main {
       flex: 1;
-      background: #36bc64 url(//cloud.hunger-valley.com/17-12-13/38476998.jpg-middle) center center no-repeat;
+      background: #28527a url(//cloud.hunger-valley.com/17-12-13/38476998.jpg-middle) center center no-repeat;
       background-size: contain;
     }
 
@@ -184,7 +187,7 @@
         padding: 10px 20px;
         margin-top: -1px;
         font-weight: normal;
-        font-size: 16px;
+        font-size: 20px;
         border-top: 1px solid #eee;
         cursor: pointer;
 
@@ -194,7 +197,7 @@
       }
 
       .button {
-        background-color: #2bb964;
+        background-color: #28527a;
         height: 36px;
         line-height: 36px;
         text-align: center;

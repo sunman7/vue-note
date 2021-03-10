@@ -2,8 +2,8 @@ const fs = require("fs");
 const path = require("path");
 
 // const mockBaseURL = "localhost:8080";
-const mockBaseURL = "http://note-server.hunger-valley.com"; //测试地址
-const realBaseURL = "http://note-server.hunger-valley.com"; //线上地址
+const mockBaseURL = "https://note-server.hunger-valley.com"; //测试地址
+const realBaseURL = "https://note-server.hunger-valley.com"; //线上地址
 
 
 exports.config = function ({isDev = true} = {isDev: true}) {
