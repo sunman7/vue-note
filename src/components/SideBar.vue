@@ -24,7 +24,7 @@
       logout() {
         auth.logout().then(data => {
           this.$router.push({path: "login"});
-          console.log(data);
+          this.$message({message:data.msg,type:"success"});
         });
       }
     }
@@ -36,11 +36,11 @@
 <style lang="less" scoped>
 
   #sidebar {
-    position: relative;
+    position: fixed;
     width: 140px;
+    height: 100%;
     text-align: center;
     background-color: #2c333c;
-
     .icons {
       margin-top: 15px;
 

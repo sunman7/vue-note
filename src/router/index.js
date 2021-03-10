@@ -4,15 +4,15 @@ import Login from "@/components/Login";
 import NotebookList from "../components/NotebookList";
 import NoteDetail from "../components/NoteDetail";
 import TrashDetail from "../components/TrashDetail";
-
+import Test from "../components/Test";
 
 Vue.use(Router);
 
 export default new Router({
   routes: [
     {
-      path:"/",
-      component: NotebookList
+      path: "/",
+      component: Test
     },
     {
       path: "/login",

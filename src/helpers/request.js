@@ -1,7 +1,7 @@
 import axios from "axios";
 import baseURLConfig from "./config-baseURL";
+import {Message} from "element-ui";
 
-console.log(baseURLConfig);
 
 axios.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
 axios.defaults.baseURL = baseURLConfig.baseURL;
@@ -26,10 +26,11 @@ export default function request(url, type = "GET", data = {}) {
       if (res.status === 200) {
         resolve(res.data);
       } else {
+        Message.error(res.data);
         reject(res.data);
       }
     }).catch(err => {
-      reject({msg: "网络异常"});
+      Message.error("网络异常");
     });
   }));
 

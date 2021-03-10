@@ -1,21 +1,22 @@
 <template>
   <div class="detail" id="notebook-list">
     <header>
-      <a href="#" class="btn"><i class="iconfont icon-plus"></i>新建笔记本</a>
+      <a href="#" class="btn" @click.prevent="onCreate"><i class="iconfont icon-plus"></i>新建笔记本</a>
     </header>
     <main>
       <div class="layout">
-        <h3>笔记本列表</h3>
+        <h3>笔记本列表({{notebooks.length}})</h3>
         <div class="book-list">
-          <a href="" class="notebook">
+          <router-link v-for="notebook in notebooks" :key="notebook.id" to="/note/1" class="notebook">
             <div>
-                  <span class="iconfont icon-notebook">
-                    笔记本标题1<span>3</span><span class="action">编辑</span>
-                    <span class="action">删除</span>
-                    <span class="date">3天前</span>
-                  </span>
+              <span class="iconfont icon-notebook"></span>
+              {{notebook.title}}
+              <span>{{notebook.noteCounts}}</span>
+              <span class="action" @click.stop.prevent="()=> onEdit(notebook)">编辑</span>
+              <span class="action" @click.stop.prevent="() =>onDelete(notebook)">删除</span>
+              <span class="date">{{notebook.friendlyTime}}</span>
             </div>
-          </a>
+          </router-link>
         </div>
       </div>
     </main>
@@ -24,8 +25,16 @@
 
 <script>
   import auth from "@/api/auth";
+  import notebooks from "../api/notebooks";
+  import {parseDate} from "../helpers/util";
+
 
   export default {
+    data() {
+      return {
+        notebooks: []
+      };
+    },
     created() {
       auth.getInfo().then(
         res => {
@@ -34,11 +43,59 @@
           }
         }
       );
+
+      notebooks.getAll().then(res => {
+        this.notebooks = res.data;
+      });
+    },
+    methods: {
+      onCreate() {
+        this.$prompt("请输入新笔记本名字", "创建笔记本", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          inputPattern: /^.{1,30}$/,
+          inputErrorMessage: "笔记本标题不为空，长度不超过30个字符"
+        }).then(({value}) => {
+          return notebooks.addNotebook({title: value});
+        }).then(res => {
+          res.data.friendlyTime = parseDate(res.data.createdAt);
+          this.notebooks.unshift(res.data);
+          this.$message.success(res.msg);
+        });
+      },
+      onEdit(notebook) {
+        console.log(notebook.id);
+        let title = "";
+        this.$prompt("请输入新笔记本名字", "修改笔记本", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          inputValue: notebook.title,
+          inputPattern: /^.{1,30}$/,
+          inputErrorMessage: "笔记本标题不为空，长度不超过30个字符"
+        }).then(({value}) => {
+          title = value;
+          return notebooks.updateNotebook(notebook.id, {title});
+        }).then(res => {
+          notebook.title = title;
+          this.$message.success(res.msg);
+        });
+      },
+      onDelete(notebook) {
+        this.$confirm("你确认要删除笔记本吗?", "删除笔记本", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        }).then(() => {
+          return notebooks.deleteNotebook(notebook.id);
+        }).then(res => {
+          this.notebooks.splice(this.notebooks.indexOf(notebook), 1);
+          this.$message.success(res.msg);
+        });
+      }
     }
   };
 </script>
 
 <style lang="less" scoped>
   @import url(../assets/css/notebook-list);
-
 </style>

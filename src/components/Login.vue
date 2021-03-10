@@ -88,6 +88,7 @@
         }).then(data => {
           this.register.isError = false;
           this.register.notice = "";
+          this.$message({message:data.msg,type:"success"});
           this.$router.push({path: "notebooks"});
         }).catch(err => {
           this.register.isError = true;
@@ -119,7 +120,7 @@
         }).then(data => {
           this.login.isError = false;
           this.login.notice = "";
-
+          this.$message({message:data.msg,type:"success"});
           bus.$emit("userInfo", {username: this.login.username});
           this.$router.push({path: "notebooks"});
         }).catch(err => {
