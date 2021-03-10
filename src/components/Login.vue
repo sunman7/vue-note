@@ -34,7 +34,7 @@
 </template>
 <script>
   import auth from "@/api/auth";
-
+  import bus from "@/helpers/bus";
 
   export default {
     data() {
@@ -119,7 +119,8 @@
         }).then(data => {
           this.login.isError = false;
           this.login.notice = "";
-          auth.getInfo().then(res => console.log(res));
+
+          bus.$emit("userInfo", {username: this.login.username});
           this.$router.push({path: "notebooks"});
         }).catch(err => {
           this.login.isError = true;
