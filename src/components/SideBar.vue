@@ -24,7 +24,7 @@
       logout() {
         auth.logout().then(data => {
           this.$router.push({path: "login"});
-          this.$message({message:data.msg,type:"success"});
+          this.$message.success(data.msg);
         });
       }
     }
@@ -41,6 +41,7 @@
     height: 100%;
     text-align: center;
     background-color: #2c333c;
+
     .icons {
       margin-top: 15px;
 

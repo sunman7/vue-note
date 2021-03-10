@@ -1,5 +1,7 @@
 <template>
-    <div></div>
+    <div id="note-detail">
+      <h1>notebookId :{{}}</h1>
+    </div>
 </template>
 
 <script type="text/ecmascript-6">
