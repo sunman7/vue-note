@@ -16,9 +16,9 @@ export default {
           res.data = res.data.map(note => {
             note.createdAtFriendly = parseDate(note.createdAt);
             note.updatedAtFriendly = parseDate(note.updatedAt);
-            return note
-          }).sort( (note1,note2) =>{
-            return note1.updatedAt < note2.updatedAt
+            return note;
+          }).sort((note1, note2) => {
+            return note1.updatedAt < note2.updatedAt;
           });
           resolve(res);
         }
@@ -31,10 +31,10 @@ export default {
     return new Promise(((resolve, reject) => {
       request(URL.UPDATE.replace(":noteId", noteId), "PATCH", {title, content}).then(
         res => {
-
           resolve(res.data);
         }
       ).catch(err => {
+
         reject(err);
       });
     }));
@@ -43,6 +43,14 @@ export default {
     return request(URL.DELETE.replace(":noteId", noteId), "DELETE");
   },
   addNote({notebookId}, {title = "", content = ""} = {title: "", content: ""}) {
-    return request(URL.ADD.replace(":notebookId", notebookId), "POST", {title, content});
+    return new Promise(((resolve, reject) => {
+      request(URL.ADD.replace(":notebookId", notebookId), "POST", {title, content})
+        .then(res => {
+          res.data.createdAtFriendly = parseDate(res.data.createdAt);
+          res.data.updatedAtFriendly = parseDate(res.data.updatedAt);
+          resolve(res);
+        }).catch(err => reject(err));
+    }));
+
   }
 };

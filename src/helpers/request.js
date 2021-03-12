@@ -26,7 +26,8 @@ export default function request(url, type = "GET", data = {}) {
       if (res.status === 200) {
         resolve(res.data);
       } else {
-        Message.error(res.data);
+        console.log(res.data);
+        Message.error(res.data.msg);
         reject(res.data);
       }
     }).catch(err => {

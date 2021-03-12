@@ -28,7 +28,7 @@
 
 <script>
   import notebooks from "@/api/notebooks";
-
+  import Bus from "@/helpers/bus";
   import note from "@/api/note";
 
   window.Note = note;
@@ -42,9 +42,10 @@
           return note.getAll({notebookId: this.curBook.id});
         }).then(res => {
         this.notes = res.data;
+        this.$emit("update:notes", this.notes);
+        Bus.$emit("update:notes", this.notes);
       });
     },
-
     data() {
       return {
         notebooks: [],
@@ -66,7 +67,12 @@
         );
       },
       addNote() {
-
+        note.addNote({notebookId: this.curBook.id}).then(
+          res => {
+            console.log(res);
+            this.notes.unshift(res.data);
+          }
+        );
       }
     },
 
