@@ -81,7 +81,6 @@
         }
         this.register.isError = false;
         this.register.notice = "";
-        console.log("开始注册");
         auth.register({
           username: this.register.username,
           password: this.register.password
@@ -113,7 +112,6 @@
         }
         this.login.isError = false;
         this.login.notice = "";
-        console.log("登录");
         auth.login({
           username: this.login.username,
           password: this.login.password

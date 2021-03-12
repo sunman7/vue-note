@@ -13,8 +13,9 @@ export default {
     return new Promise((resolve, reject) => {
       request(URL.GET).then(
         res => {
-          console.log(res.data);
-          res.data = res.data.sort((notebook1, notebook2) => notebook1.createdAt < notebook2.createdAt);
+          res.data = res.data.sort((notebook1, notebook2) => {
+            return notebook1.createdAt < notebook2.createdAt;
+          });
           res.data.forEach(notebook => notebook.friendlyTime = parseDate(notebook.createdAt));
           resolve(res);
         }

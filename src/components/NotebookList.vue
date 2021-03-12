@@ -64,7 +64,6 @@
         });
       },
       onEdit(notebook) {
-        console.log(notebook.id);
         let title = "";
         this.$prompt("请输入新笔记本名字", "修改笔记本", {
           confirmButtonText: "确定",

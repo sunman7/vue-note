@@ -15,7 +15,6 @@
     created() {
       bus.$on("userInfo", data => this.username = data.username);
       auth.getInfo().then(res => {
-        console.log(res);
         if (res.isLogin) {
           this.username = res.data.username;
         }

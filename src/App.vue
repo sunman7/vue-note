@@ -68,7 +68,6 @@
     display: inline-block;
   }
 
-
   #app {
     display: flex;
     align-items: stretch;
