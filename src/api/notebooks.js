@@ -16,11 +16,14 @@ export default {
           res.data = res.data.sort((notebook1, notebook2) => {
             return notebook1.createdAt < notebook2.createdAt;
           });
-          res.data.forEach(notebook => notebook.friendlyTime = parseDate(notebook.createdAt));
+          res.data.forEach(notebook => {
+            notebook.createdAtFriendly = parseDate(notebook.createdAt);
+            notebook.updatedAtFriendly = parseDate(notebook.updatedAt);
+          });
           resolve(res);
         }
-      );
-    }).catch(err => reject(err));
+      ).catch(err => reject(err));
+    })
   },
   updateNotebook(id, {title = ""} = {title: ""}) {
     return request(URL.UPDATE.replace(":id", id), "PATCH", {title});
@@ -29,6 +32,16 @@ export default {
     return request(URL.DELETE.replace(":id", id), "DELETE");
   },
   addNotebook({title = ""} = {title: ""}) {
-    return request(URL.ADD, "POST", {title});
+    return new Promise(((resolve, reject) => {
+        request(URL.ADD, "POST", {title})
+          .then(res => {
+            res.data.createdAtFriendly = parseDate(res.data.createdAt);
+            res.data.updatedAtFriendly = parseDate(res.data.updatedAt);
+            resolve(res);
+          }).catch(err => {
+          reject(err);
+        });
+      })
+    );
   }
 };

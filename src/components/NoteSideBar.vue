@@ -1,6 +1,6 @@
 <template>
   <div class="note-sidebar">
-    <span class="btn add-note" @click="addNote">添加笔记</span>
+    <span class="btn add-note" @click="onAddNote">添加笔记</span>
     <el-dropdown class="notebook-title" @command="handleCommand" placement="bottom">
       <span class="el-dropdown-link">
         {{curBook.title}} <i class="iconfont icon-down"></i>
@@ -28,51 +28,54 @@
 
 <script>
   import notebooks from "@/api/notebooks";
-  import Bus from "@/helpers/bus";
   import note from "@/api/note";
+  import {mapState, mapGetters, mapActions} from "vuex";
 
-  window.Note = note;
   export default {
     created() {
-      notebooks.getAll().then(
-        res => {
-          this.notebooks = res.data;
-          this.curBook = this.notebooks.find(notebook => notebook.id == this.$route.query.notebookId) //通过点击笔记本进来的
-            || this.notebooks[0] || {}; //如果直接点进来的
-          return note.getAll({notebookId: this.curBook.id});
-        }).then(res => {
-        this.notes = res.data;
-        this.$emit("update:notes", this.notes);
-        Bus.$emit("update:notes", this.notes);
+      this.getNotebooks()
+        .then(() => {
+          this.$store.commit("setCurBook", {curBookId: this.$route.query.notebookId});
+          return this.getNotes({notebookId: this.curBook.id});
+        }).then(() => {
+        this.$store.commit("setCurNote", {curNoteId: this.$route.query.noteId});
       });
+      // notebooks.getAll().then(
+      //   res => {
+      //     this.notebooks = res.data;
+      //     this.curBook = this.notebooks.find(notebook => notebook.id == this.$route.query.notebookId) //通过点击笔记本进来的
+      //       || this.notebooks[0] || {}; //如果直接点进来的
+      //     return note.getAll({notebookId: this.curBook.id});
+      //   }).then(res => {
+      //   this.notes = res.data;
+      //   this.$emit("update:notes", this.notes);
+      //   Bus.$emit("update:notes", this.notes);
+      // });
     },
     data() {
-      return {
-        notebooks: [],
-        notes: [],
-        curBook: {}
-      };
+      return {};
     },
-
+    computed: {
+      ...mapGetters(["notes", "notebooks", "curBook"])
+    },
     methods: {
+      ...mapActions(["getNotebooks", "getNotes", "addNote"]),
       handleCommand(notebookId) {
         if (notebookId === "trash") {
           return this.$router.push({path: "/trash"});
         }
-        this.curBook = this.notebooks.find(notebook => notebook.id == notebookId);
-        note.getAll({notebookId}).then(
-          res => {
-            this.notes = res.data;
-          }
-        );
+        this.$store.commit("setCurBook", {curBookId: notebookId});
+        this.getNotes({notebookId});
+        // this.curBook = this.notebooks.find(notebook => notebook.id == notebookId);
+        // note.getAll({notebookId}).then(
+        //   res => {
+        //     this.notes = res.data;
+        //   }
+        // );
       },
-      addNote() {
-        note.addNote({notebookId: this.curBook.id}).then(
-          res => {
-            console.log(res);
-            this.notes.unshift(res.data);
-          }
-        );
+      onAddNote() {
+        this.addNote({notebookId: this.curBook.id});
+
       }
     },
 
