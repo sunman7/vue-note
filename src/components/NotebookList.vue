@@ -35,20 +35,21 @@
       return {};
     },
     created() {
-      auth.getInfo().then(
-        res => {
-          if (!res.isLogin) {
-            this.$router.push({path: "/login"});
-          }
-        }
-      );
-      this.$store.dispatch("getNotebooks");
+      // auth.getInfo().then(
+      //   res => {
+      //     if (!res.isLogin) {
+      //       this.$router.push({path: "/login"});
+      //     }
+      //   }
+      // );
+      this.checkLogin({path: "/login"}); //未登录就跳转
+      this.getNotebooks();
     },
     computed: {
       ...mapGetters(["notebooks"])
     },
     methods: {
-      ...mapActions(["getNotebooks", "addNotebook", "updateNotebook", "deleteNotebook"]),
+      ...mapActions(["getNotebooks", "addNotebook", "updateNotebook", "deleteNotebook", "checkLogin"]),
       onCreate() {
         this.$prompt("请输入新笔记本名字", "创建笔记本", {
           confirmButtonText: "确定",
@@ -78,7 +79,7 @@
           cancelButtonText: "取消",
           type: "warning"
         }).then(() => {
-          this.deleteNotebook({notebookId:notebook.id});
+          this.deleteNotebook({notebookId: notebook.id});
         });
       }
     }

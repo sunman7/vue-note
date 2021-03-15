@@ -4,27 +4,23 @@
 
 <script>
   import auth from "@/api/auth";
-  import bus from "@/helpers/bus";
+  import {mapGetters, mapActions} from "vuex";
 
   export default {
     data() {
-      return {
-        username: "未登录"
-      };
-    },
-    created() {
-      bus.$on("userInfo", data => this.username = data.username);
-      auth.getInfo().then(res => {
-        if (res.isLogin) {
-          this.username = res.data.username;
-        }
-      });
+      return {};
     },
     computed: {
-      slug() {
-        return this.username.charAt(0);
-      }
-    }
+      ...mapGetters(["username", "slug"])
+    },
+    methods: {
+      ...mapActions(["checkLogin"])
+    },
+    created() {
+      // bus.$on("userInfo", data => this.username = data.username);
+      this.checkLogin({path:"/login"});
+    },
+
   };
 </script>
 

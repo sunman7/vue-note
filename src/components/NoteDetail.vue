@@ -51,7 +51,7 @@
       };
     },
     methods: {
-      ...mapActions(["updateNote", "deleteNote"]),
+      ...mapActions(["updateNote", "deleteNote", "checkLogin"]),
       onUpdateNote: _.debounce(function () {
         this.updateNote({
           noteId: this.curNote.id,
@@ -66,7 +66,7 @@
       onDeleteNote() {
         this.deleteNote({noteId: this.curNote.id}).then(res => {
           this.$router.replace({path: "/notebook"});
-        })
+        });
       }
     },
     computed: {
@@ -76,13 +76,7 @@
       }
     },
     created() {
-      auth.getInfo().then(
-        res => {
-          if (!res.isLogin) {
-            this.$router.push({path: "/login"});
-          }
-        }
-      );
+      this.checkLogin({path: "/login"});
       // Bus.$once("update:notes", val => {
       //   this.curNote = val.find(note => note.id == this.$route.query.noteId) || {};
       // });
