@@ -18,7 +18,7 @@ export default {
             note.updatedAtFriendly = parseDate(note.updatedAt);
             return note;
           }).sort((note1, note2) => {
-            return note1.updatedAt < note2.updatedAt;
+            return note1.updatedAt < note2.updatedAt ? 1 : -1;
           });
           resolve(res);
         }

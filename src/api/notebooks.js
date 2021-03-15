@@ -13,9 +13,7 @@ export default {
     return new Promise((resolve, reject) => {
       request(URL.GET).then(
         res => {
-          res.data = res.data.sort((notebook1, notebook2) => {
-            return notebook1.createdAt < notebook2.createdAt;
-          });
+          res.data.sort((notebook1, notebook2) => notebook1.createdAt < notebook2.createdAt ? 1 : -1);
           res.data.forEach(notebook => {
             notebook.createdAtFriendly = parseDate(notebook.createdAt);
             notebook.updatedAtFriendly = parseDate(notebook.updatedAt);
@@ -23,7 +21,7 @@ export default {
           resolve(res);
         }
       ).catch(err => reject(err));
-    })
+    });
   },
   updateNotebook(id, {title = ""} = {title: ""}) {
     return request(URL.UPDATE.replace(":id", id), "PATCH", {title});

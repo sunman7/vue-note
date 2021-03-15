@@ -12,8 +12,9 @@ export default {
     return new Promise((resolve, reject) => {
       request(URL.GET).then(
         res => {
+
           res.data = res.data.sort((note1, note2) => {
-            return note1.createdAt < note2.createdAt;
+            return note1.createdAt < note2.createdAt ? 1 : -1;
           });
           res.data.forEach(note => {
             note.createdAtFriendly = parseDate(note.createdAt);
