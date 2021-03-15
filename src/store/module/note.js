@@ -1,6 +1,5 @@
 import Note from "../../api/note";
 import {Message} from "element-ui";
-import Notebook from "../../api/notebooks";
 
 const state = {
   notes: null,
@@ -44,6 +43,7 @@ const actions = {
     return Note.addNote({notebookId}, {title, content})
       .then(res => {
         commit("addNote", {note: res.data});
+        Message.success(res.msg);
       });
   },
   updateNote({commit}, {noteId, title, content}) {
@@ -56,6 +56,7 @@ const actions = {
     return Note.deleteNote({noteId})
       .then(res => {
         commit("deleteNote", {noteId});
+        Message.success(res.msg);
       });
   }
 };

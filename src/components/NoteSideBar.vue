@@ -3,7 +3,8 @@
     <span class="btn add-note" @click="onAddNote">添加笔记</span>
     <el-dropdown class="notebook-title" @command="handleCommand" placement="bottom">
       <span class="el-dropdown-link">
-        {{curBook.title}} <i class="iconfont icon-down"></i>
+        {{curBook.title.length > 4? curBook.title.substring(0,4) +"..." : curBook.title}} <i
+        class="iconfont icon-down"></i>
       </span>
       <el-dropdown-menu slot="dropdown">
         <el-dropdown-item v-for="notebook in notebooks" :key="notebook.id" :command="notebook.id">{{notebook.title}}
@@ -19,7 +20,7 @@
       <li v-for="note in notes">
         <router-link :to="`/notebook?noteId=${note.id}&notebookId=${curBook.id}`">
           <span class="date">{{note.updatedAtFriendly}}</span>
-          <span class="title">{{note.title}}</span>
+          <span class="title">{{note.title.length > 7? note.title.substring(0,7) +"...": note.title}}</span>
         </router-link>
       </li>
     </ul>
@@ -28,7 +29,6 @@
 
 <script>
   import notebooks from "@/api/notebooks";
-  import note from "@/api/note";
   import {mapState, mapGetters, mapActions} from "vuex";
 
   export default {
@@ -39,6 +39,13 @@
           return this.getNotes({notebookId: this.curBook.id});
         }).then(() => {
         this.$store.commit("setCurNote", {curNoteId: this.$route.query.noteId});
+        this.$router.replace({
+          path: "/notebook",
+          query: {
+            noteId: this.curNote.id,
+            notebookId: this.curBook.id
+          }
+        });
       });
       // notebooks.getAll().then(
       //   res => {
@@ -56,7 +63,7 @@
       return {};
     },
     computed: {
-      ...mapGetters(["notes", "notebooks", "curBook"])
+      ...mapGetters(["notes", "notebooks", "curBook", "curNote"])
     },
     methods: {
       ...mapActions(["getNotebooks", "getNotes", "addNote"]),
@@ -65,7 +72,18 @@
           return this.$router.push({path: "/trash"});
         }
         this.$store.commit("setCurBook", {curBookId: notebookId});
-        this.getNotes({notebookId});
+        this.getNotes({notebookId})
+          .then(() => {
+            this.$store.commit("setCurNote", {});
+            this.$router.replace({
+              path: "/notebook",
+              query: {
+                noteId: this.curNote.id,
+                notebookId: this.curBook.id
+              }
+            });
+          });
+
         // this.curBook = this.notebooks.find(notebook => notebook.id == notebookId);
         // note.getAll({notebookId}).then(
         //   res => {

@@ -5,11 +5,15 @@
       <div class="note-empty" v-show="!curNote.id">请选择笔记</div>
       <div class="note-detail-ct" v-show="curNote.id">
         <div class="note-bar">
-          <span> 创建日期: {{curNote.createdAtFriendly}}</span>
-          <span> 更新日期: {{curNote.updatedAtFriendly}}</span>
-          <span> {{statusText}}</span>
-          <span class="iconfont icon-delete" @click="onDeleteNote"></span>
-          <span class="iconfont icon-fullscreen" @click="isShowPreview = !isShowPreview"></span>
+          <div>
+            <span> 创建日期: {{curNote.createdAtFriendly}}</span>
+            <span> 更新日期: {{curNote.updatedAtFriendly}}</span>
+            <span> {{statusText}}</span>
+          </div>
+          <div>
+            <span class="iconfont icon-delete" @click="onDeleteNote"></span>
+            <span class="iconfont icon-fullscreen" @click="isShowPreview = !isShowPreview"></span>
+          </div>
         </div>
         <div class="note-title">
           <input type="text" v-model:value="curNote.title" @input="onUpdateNote" @keydown="statusText='正在输入...'"

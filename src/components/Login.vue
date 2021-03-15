@@ -162,8 +162,8 @@
   }
 
   .modal-container {
-    width: 800px;
-    height: 500px;
+    width: 1000px;
+    height: 800px;
     margin: 0px auto;
     background-color: #fff;
     border-radius: 2px;
@@ -174,12 +174,13 @@
 
     .main {
       flex: 1;
-      background: #28527a url(//cloud.hunger-valley.com/17-12-13/38476998.jpg-middle) center center no-repeat;
+      background: #28527a url(../assets/pic.jpg) center center no-repeat;
+
       background-size: contain;
     }
 
     .form {
-      width: 270px;
+      width: 350px;
       border-left: 1px solid #ccc;
       overflow: hidden;
 
@@ -187,7 +188,7 @@
         padding: 10px 20px;
         margin-top: -1px;
         font-weight: normal;
-        font-size: 20px;
+        font-size: 36px;
         border-top: 1px solid #eee;
         cursor: pointer;
 
@@ -198,14 +199,15 @@
 
       .button {
         background-color: #28527a;
-        height: 36px;
-        line-height: 36px;
+        height: 50px;
+        line-height: 50px;
         text-align: center;
         font-weight: bold;
         color: #fff;
         border-radius: 4px;
         margin-top: 18px;
         cursor: pointer;
+        font-size: 20px;
       }
 
       .login, .register {
@@ -216,15 +218,15 @@
         transition: height .4s;
 
         &.show {
-          height: 193px;
+          height: 240px;
         }
 
         input {
           display: block;
           width: 100%;
-          height: 35px;
-          line-height: 35px;
-          padding: 0 6px;
+          height: 50px;
+          line-height: 50px;
+          padding: 0 10px;
           border-radius: 4px;
           border: 1px solid #ccc;
           outline: none;
@@ -237,7 +239,7 @@
         }
 
         p {
-          font-size: 12px;
+          font-size: 20px;
           margin-top: 10px;
           color: #444;
         }
