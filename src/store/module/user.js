@@ -22,7 +22,7 @@ const actions = {
       });
   },
   register({commit}, {username, password}) {
-    return auth.register({usernmae, password})
+    return auth.register({username, password})
       .then(res => {
         commit("setUser", {user: res.data});
       });
