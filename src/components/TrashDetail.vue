@@ -18,7 +18,8 @@
       </ul>
     </div>
     <div class="note-detail">
-      <div class="note-bar" v-if="true">
+      <div class="note-empty" v-if="!curTrashNote.id">回收站为空</div>
+      <div class="note-bar" v-if="curTrashNote.id">
         <div>
           <span>创建日期:{{curTrashNote.createdAtFriendly}}</span>
           <span>|</span>
@@ -48,8 +49,7 @@
   const md = new MarkdownIt();
   export default {
     data() {
-      return {
-      };
+      return {};
     },
     created() {
       this.checkLogin({path: "/login"});
@@ -61,7 +61,7 @@
         });
     },
     computed: {
-      ...mapGetters(["trashNotes", "curTrashNote","belongTo"]),
+      ...mapGetters(["trashNotes", "curTrashNote", "belongTo"]),
       compiledMarkdown() {
         return md.render(this.curTrashNote.content || "");
       }
