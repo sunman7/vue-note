@@ -143,7 +143,6 @@
   };
 </script>
 <style lang="less">
-
   .modal-mask {
     position: fixed;
     z-index: 100;
@@ -230,7 +229,7 @@
           border-radius: 4px;
           border: 1px solid #ccc;
           outline: none;
-          font-size: 14px;
+          font-size: 18px;
           margin-top: 10px;
         }
 

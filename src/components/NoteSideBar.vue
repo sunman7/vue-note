@@ -2,7 +2,7 @@
   <div class="note-sidebar">
     <span class="btn add-note" @click="onAddNote">添加笔记</span>
     <span v-if="!curBook.id" class="notebook-title">无笔记本</span>
-    <el-dropdown class="notebook-title" @command="handleCommand" placement="bottom">
+    <el-dropdown v-if="curBook.id" class="notebook-title" @command="handleCommand" placement="bottom">
       <span class="el-dropdown-link">
         {{curBook.title.length > 4? curBook.title.substring(0,4) +"..." : curBook.title}} <i
         class="iconfont icon-down"></i>
