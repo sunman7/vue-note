@@ -27,7 +27,6 @@ export default function request(url, type = "GET", data = {}) {
         resolve(res.data);
       } else {
         console.log(res.data);
-        Message.error(res.data.msg);
         reject(res.data);
       }
     }).catch(err => {

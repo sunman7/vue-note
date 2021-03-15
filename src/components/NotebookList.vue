@@ -80,7 +80,7 @@
           type: "warning"
         }).then(() => {
           this.deleteNotebook({notebookId: notebook.id});
-        });
+        })
       }
     }
   };

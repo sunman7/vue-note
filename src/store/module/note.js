@@ -44,6 +44,8 @@ const actions = {
       .then(res => {
         commit("addNote", {note: res.data});
         Message.success(res.msg);
+      }).catch(err => {
+        Message.error("请先添加笔记本");
       });
   },
   updateNote({commit}, {noteId, title, content}) {

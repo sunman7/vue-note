@@ -87,7 +87,7 @@
         }).then(data => {
           this.register.isError = false;
           this.register.notice = "";
-          // this.$message({message: data.msg, type: "success"});
+          this.$message.success("注册成功");
           this.$router.push({path: "notebooks"});
         }).catch(err => {
           this.register.isError = true;
@@ -118,8 +118,8 @@
         }).then(data => {
           this.login.isError = false;
           this.login.notice = "";
-          // this.$message({message: data.msg, type: "success"});
           // bus.$emit("userInfo", {username: this.login.username});
+          this.$message.success("登录成功");
           this.$router.push({path: "notebooks"});
         }).catch(err => {
           this.login.isError = true;
@@ -174,8 +174,7 @@
     .main {
       flex: 1;
       background: #28527a url(../assets/pic.jpg) center center no-repeat;
-
-      background-size: contain;
+      background-size: 100% 100%;
     }
 
     .form {

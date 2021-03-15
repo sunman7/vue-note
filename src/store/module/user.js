@@ -1,5 +1,6 @@
 import auth from "../../api/auth";
 import router from "@/router";
+import {Message} from "element-ui";
 
 const state = {
   user: null,
@@ -31,6 +32,7 @@ const actions = {
     return auth.getInfo()
       .then(res => {
         if (!res.isLogin) {
+          Message.info("请先登录");
           router.push(payload);
         } else {
           commit("setUser", {user: res.data});

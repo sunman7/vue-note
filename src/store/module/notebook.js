@@ -57,6 +57,8 @@ const actions = {
       .then(res => {
         commit("deleteNoteBook", {notebookId});
         Message.success(res.msg);
+      }).catch(err => {
+        Message.error(err.msg);
       });
   },
 
